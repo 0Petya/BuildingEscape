@@ -13,16 +13,17 @@ class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
 
 public:	
 	UOpenDoor();
-  void Open();
+  void Open(bool);
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-  UPROPERTY(VisibleAnywhere)
+  UPROPERTY(EditAnywhere)
   float OpenAngle = 90.0f;
-
   UPROPERTY(EditAnywhere)
   ATriggerVolume* PressurePlate;
-
+  UPROPERTY(EditAnywhere)
+  float DoorCloseDelay = 0.5f;
+  float LastDoorOpenTime;
   AActor* ActorThatOpens;
 };

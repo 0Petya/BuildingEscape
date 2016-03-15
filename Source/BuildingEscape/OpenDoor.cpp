@@ -8,10 +8,8 @@ UOpenDoor::UOpenDoor() {
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UOpenDoor::Open()
-{
-  FRotator Rotation = FRotator(0.0f, 90.0f, 0.0f);
-  GetOwner()->SetActorRotation(Rotation);
+void UOpenDoor::Open(bool BOpen) {
+  GetOwner()->SetActorRotation(FRotator(0.0f, BOpen ? 90.0f : 0.0f, 0.0f));
 }
 
 void UOpenDoor::BeginPlay() {
@@ -23,6 +21,11 @@ void UOpenDoor::BeginPlay() {
 void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-  if (PressurePlate->IsOverlappingActor(ActorThatOpens))
-    Open();
+  if (PressurePlate->IsOverlappingActor(ActorThatOpens)) {
+    Open(true);
+    LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+  }
+
+  if (GetWorld()->GetTimeSeconds() >= LastDoorOpenTime + DoorCloseDelay)
+    Open(false);
 }
