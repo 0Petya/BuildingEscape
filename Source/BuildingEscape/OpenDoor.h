@@ -3,16 +3,26 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
-#include "UPositionReporter.generated.h"
+#include "OpenDoor.generated.h"
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class BUILDINGESCAPE_API UUPositionReporter : public UActorComponent
+class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	UUPositionReporter();
+	UOpenDoor();
+  void Open();
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+private:
+  UPROPERTY(VisibleAnywhere)
+  float OpenAngle = 90.0f;
+
+  UPROPERTY(EditAnywhere)
+  ATriggerVolume* PressurePlate;
+
+  AActor* ActorThatOpens;
 };
