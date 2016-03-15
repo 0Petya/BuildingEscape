@@ -3,16 +3,15 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
-#include "PositionReporter.generated.h"
-
+#include "Grabber.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class BUILDINGESCAPE_API UPositionReporter : public UActorComponent {
+class BUILDINGESCAPE_API UGrabber : public UActorComponent {
 
 	GENERATED_BODY()
 
 public:	
-	UPositionReporter();
+	UGrabber();
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 };

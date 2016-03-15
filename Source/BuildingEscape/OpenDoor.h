@@ -7,8 +7,8 @@
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
-{
+class BUILDINGESCAPE_API UOpenDoor : public UActorComponent {
+
 	GENERATED_BODY()
 
 public:	
