@@ -8,20 +8,30 @@ UOpenDoor::UOpenDoor() {
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UOpenDoor::Open(bool BOpen) {
-  GetOwner()->SetActorRotation(FRotator(0.0f, BOpen ? 90.0f : 0.0f, 0.0f));
+void UOpenDoor::Open(bool bOpen) {
+  GetOwner()->SetActorRotation(FRotator(0.0f, bOpen ? 90.0f : 0.0f, 0.0f));
 }
 
 void UOpenDoor::BeginPlay() {
 	Super::BeginPlay();
+}
 
-  ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
+float UOpenDoor::GetTotalMassOfActorsOnPlate() {
+  float TotalMass = 0.0f;
+
+  TArray<AActor*> Actors;
+  PressurePlate->GetOverlappingActors(Actors);
+
+  for (AActor* Actor : Actors)
+    TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
+
+  return TotalMass;
 }
 
 void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-  if (PressurePlate->IsOverlappingActor(ActorThatOpens)) {
+  if (GetTotalMassOfActorsOnPlate() > TriggerMass) {
     Open(true);
     LastDoorOpenTime = GetWorld()->GetTimeSeconds();
   }

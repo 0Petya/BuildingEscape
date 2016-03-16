@@ -18,4 +18,12 @@ public:
 private:
   UPROPERTY(EditAnywhere)
   float Reach = 100.0f;
+
+  UPhysicsHandleComponent* PhysicsHandle = nullptr;
+  UInputComponent* Input = nullptr;
+
+  FVector GetReachLine(bool);
+  const FHitResult GetFirstPhysicsBodyInReach();
+  void Grab();
+  void Release();
 };
