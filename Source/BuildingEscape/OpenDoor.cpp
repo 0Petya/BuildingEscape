@@ -8,10 +8,6 @@ UOpenDoor::UOpenDoor() {
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UOpenDoor::Open(bool bOpen) {
-  GetOwner()->SetActorRotation(FRotator(0.0f, bOpen ? 90.0f : 0.0f, 0.0f));
-}
-
 void UOpenDoor::BeginPlay() {
 	Super::BeginPlay();
 
@@ -34,11 +30,6 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate() {
 void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-  if (GetTotalMassOfActorsOnPlate() > TriggerMass) {
-    Open(true);
-    LastDoorOpenTime = GetWorld()->GetTimeSeconds();
-  }
-
-  if (GetWorld()->GetTimeSeconds() >= LastDoorOpenTime + DoorCloseDelay)
-    Open(false);
+  if (GetTotalMassOfActorsOnPlate() > TriggerMass) OnOpen.Broadcast();
+  else OnClose.Broadcast();
 }
