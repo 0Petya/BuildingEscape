@@ -11,7 +11,7 @@ UOpenDoor::UOpenDoor() {
 void UOpenDoor::BeginPlay() {
 	Super::BeginPlay();
 
-  if (!PressurePlate) UE_LOG(LogTemp, Error, TEXT("#s missing PressurePlate."), *GetOwner()->GetName());
+  if (!PressurePlate) UE_LOG(LogTemp, Error, TEXT("%s missing PressurePlate."), *GetOwner()->GetName());
 }
 
 float UOpenDoor::GetTotalMassOfActorsOnPlate() {

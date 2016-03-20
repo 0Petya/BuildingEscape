@@ -41,14 +41,14 @@ void UGrabber::BeginPlay() {
 	Super::BeginPlay();
 
   PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-  if (!PhysicsHandle) UE_LOG(LogTemp, Error, TEXT("#s missing PhysicsHandle component."), *GetOwner()->GetName());
+  if (!PhysicsHandle) UE_LOG(LogTemp, Error, TEXT("%s missing PhysicsHandle component."), *GetOwner()->GetName());
 
   Input = GetOwner()->FindComponentByClass<UInputComponent>();
   if (Input) {
     Input->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
     Input->BindAction("Grab", IE_Released, this, &UGrabber::Release);
   }
-  else UE_LOG(LogTemp, Error, TEXT("#s missing InputComponent component."), *GetOwner()->GetName());
+  else UE_LOG(LogTemp, Error, TEXT("%s missing InputComponent component."), *GetOwner()->GetName());
 }
 
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
